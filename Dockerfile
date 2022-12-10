@@ -16,7 +16,13 @@ RUN \
   && apt-get clean && rm -rf /var/lib/apt/lists/* /var/lib/apt/lists/*
 
 RUN \
-  sed -i '/Log /s/\/var\/log\/cups\/.*$/stderr/' /etc/cups/cups-files.conf
+  sed -i '/Log /s/\/var\/log\/cups\/.*$/stderr/' /etc/cups/cups-files.conf && \
+  sed -i \
+  -e 's/LogLevel .*/LogLevel debug/' \
+  -e 's/Listen localhost:631/Listen 0.0.0.0:631/' \
+  -e 's/Browsing Off/Browsing On/' \
+  -e 's,</Location>,  Allow all\n</Location>,' /etc/cups/cupsd.conf; \
+  printf '\nServerAlias *\nDefaultEncryption IfRequested\n' >> /etc/cups/cupsd.conf
 
 COPY entrypoint.sh /entrypoint.sh
 
