@@ -1,0 +1,23 @@
+version: '2.4'
+
+services:
+  cups:
+    container_name: cups
+    build:
+      context: .
+      args:
+        BUILD_DATE: "${BUILD_DATE}"
+        BUILD_VERSION: "${BUILD_VERSION}"
+    restart: unless-stopped
+    volumes:
+      - /dev/bus/usb:/dev/bus/usb
+      - /run/dbus:/run/dbus
+      - ./drivers:/opt/drivers
+    privileged: True
+    ports:
+      - 631:631/tcp
+      - 631:631/udp
+    healthcheck:
+      test: timeout 2 bash -c 'cat < /dev/null > /dev/tcp/127.0.0.1/631'
+      interval: 1m
+      timeout: 3s
