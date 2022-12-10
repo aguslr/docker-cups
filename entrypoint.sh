@@ -11,6 +11,12 @@ if find /opt/drivers -type f -name '*.deb' 2>/dev/null | grep -q . ; then
 	}
 fi
 
+# Create CUPS user
+if [ "${CUPS_USER}" ] && ! grep -s "^${CUPS_USER}" /etc/passwd; then
+	useradd -g lpadmin "${CUPS_USER}"
+	printf '%s:%s\n' "${CUPS_USER}" "${CUPS_PASS}" | chpasswd
+fi
+
 # Launch UDEV
 /lib/systemd/systemd-udevd --daemon
 

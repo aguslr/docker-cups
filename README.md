@@ -19,6 +19,7 @@ To use *docker-cups*, follow these steps:
 2. Clone and start the container:
 
        docker run --privileged -p 631:631 \
+         -e 'CUPS_USER=admin' -e 'CUPS_PASS=admin' \
          -v /dev/bus/usb:/dev/bus/usb -v /run/dbus:/run/dbus \
          -v "${PWD}"/drivers:/opt/drivers docker.io/aguslr/docker-cups:latest
 

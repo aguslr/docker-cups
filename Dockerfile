@@ -17,6 +17,8 @@ RUN \
 
 COPY entrypoint.sh /entrypoint.sh
 
+ENV CUPS_USER=admin CUPS_PASS=admin
+
 EXPOSE 631/tcp 631/udp
 
 VOLUME /dev/bus/usb /run/dbus /opt/drivers

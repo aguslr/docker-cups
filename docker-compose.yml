@@ -9,6 +9,9 @@ services:
         BUILD_DATE: "${BUILD_DATE}"
         BUILD_VERSION: "${BUILD_VERSION}"
     restart: unless-stopped
+    environment:
+      - CUPS_USER=admin
+      - CUPS_PASS=admin
     volumes:
       - /dev/bus/usb:/dev/bus/usb
       - /run/dbus:/run/dbus
