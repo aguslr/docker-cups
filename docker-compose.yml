@@ -5,9 +5,6 @@ services:
     container_name: cups
     build:
       context: .
-      args:
-        BUILD_DATE: "${BUILD_DATE}"
-        BUILD_VERSION: "${BUILD_VERSION}"
     restart: unless-stopped
     environment:
       - CUPS_USER=admin
