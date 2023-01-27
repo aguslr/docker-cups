@@ -18,7 +18,26 @@ env:
 
 jobs:
 
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      image-needs-updating: ${{ steps.check.outputs.needs-updating }}
+    steps:
+      - name: Check if update available
+        id: check
+        uses: lucacome/docker-image-update-checker@v1.2.0
+        with:
+          base-image: ${{ env.IMAGE_BASE }}
+          image: ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}
+        if: github.event_name == 'schedule'
+
   build:
+
+    needs: check
+
+    if: |
+      github.event_name != 'schedule' ||
+      needs.check.outputs.image-needs-updating == 'true'
 
     runs-on: ubuntu-latest
 
