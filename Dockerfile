@@ -1,4 +1,6 @@
-FROM docker.io/debian:stable-slim
+ARG BASE_IMAGE=debian:stable-slim
+
+FROM docker.io/${BASE_IMAGE}
 
 RUN \
   apt-get update && \
