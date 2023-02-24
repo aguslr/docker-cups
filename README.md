@@ -1,7 +1,7 @@
 [aguslr/docker-cups][1]
 =======================
 
-[![publish-docker-image](https://github.com/aguslr/docker-cups/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/aguslr/docker-cups/actions/workflows/docker-publish.yml) [![docker-pulls](https://img.shields.io/docker/pulls/aguslr/docker-cups)](https://hub.docker.com/r/aguslr/docker-cups) [![image-size](https://img.shields.io/docker/image-size/aguslr/docker-cups/latest)](https://hub.docker.com/r/aguslr/docker-cups)
+[![publish-docker-image](https://github.com/aguslr/docker-cups/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/aguslr/docker-cups/actions/workflows/docker-publish.yml) [![docker-pulls](https://img.shields.io/docker/pulls/aguslr/cups)](https://hub.docker.com/r/aguslr/cups) [![image-size](https://img.shields.io/docker/image-size/aguslr/cups/latest)](https://hub.docker.com/r/aguslr/cups)
 
 
 This *Docker* image sets up *CUPS* inside a docker container.
@@ -23,7 +23,7 @@ To use *docker-cups*, follow these steps:
        docker run --privileged -p 631:631 \
          -e 'CUPS_USER=admin' -e 'CUPS_PASS=admin' \
          -v /dev/bus/usb:/dev/bus/usb -v /run/dbus:/run/dbus \
-         -v "${PWD}"/drivers:/opt/drivers docker.io/aguslr/docker-cups:latest
+         -v "${PWD}"/drivers:/opt/drivers docker.io/aguslr/cups:latest
 
 3. Open <http://127.0.0.1:631> with your web browser to access CUPS.
 
