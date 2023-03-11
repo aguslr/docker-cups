@@ -20,5 +20,5 @@ fi
 # Launch UDEV
 /lib/systemd/systemd-udevd --daemon
 
-# Start AirSane
+# Start CUPS
 /usr/sbin/cupsd "$@"
