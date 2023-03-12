@@ -12,9 +12,17 @@ if find /opt/drivers -type f -name '*.deb' 2>/dev/null | grep -q . ; then
 fi
 
 # Create CUPS user
-if [ "${CUPS_USER}" ] && ! grep -s "^${CUPS_USER}" /etc/passwd; then
+if [ "${CUPS_USER:=admin}" ] && ! grep -s "^${CUPS_USER}" /etc/passwd; then
+	# Generate random password
+	[ -z "${CUPS_PASS}" ] && \
+		CUPS_PASS=$(date +%s | sha256sum | base64 | head -c 32) && gen_pass=1
+	# Add user to system
 	useradd -g lpadmin "${CUPS_USER}"
-	printf '%s:%s\n' "${CUPS_USER}" "${CUPS_PASS}" | chpasswd
+	# Set password
+	if printf '%s:%s\n' "${CUPS_USER}" "${CUPS_PASS}" \
+		| chpasswd && [ "${gen_pass}" -eq 1 ]; then
+		printf 'Password for %s is %s\n' "${CUPS_USER}" "${CUPS_PASS}"
+	fi
 fi
 
 # Launch UDEV
