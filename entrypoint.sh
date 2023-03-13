@@ -12,7 +12,7 @@ if find /opt/drivers -type f -name '*.deb' 2>/dev/null | grep -q . ; then
 fi
 
 # Create CUPS user
-if [ "${CUPS_USER:=admin}" ] && ! grep -s "^${CUPS_USER}" /etc/passwd; then
+if [ "${CUPS_USER:=admin}" ] && ! grep -q -s "^${CUPS_USER}" /etc/passwd; then
 	# Generate random password
 	[ -z "${CUPS_PASS}" ] && \
 		CUPS_PASS=$(date +%s | sha256sum | base64 | head -c 32) && gen_pass=1
