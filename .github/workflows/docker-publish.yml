@@ -9,12 +9,14 @@ on:
     paths-ignore:
       - '.git*'
       - 'docker-compose.yml'
+      - 'README.*'
   push:
     branches:
       - main
     paths-ignore:
       - '.git*'
       - 'docker-compose.yml'
+      - 'README.*'
   workflow_dispatch:
 
 env:
