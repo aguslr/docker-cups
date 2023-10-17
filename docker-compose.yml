@@ -17,7 +17,3 @@ services:
     ports:
       - 631:631/tcp
       - 631:631/udp
-    healthcheck:
-      test: timeout 2 bash -c 'cat < /dev/null > /dev/tcp/127.0.0.1/631'
-      interval: 1m
-      timeout: 3s
