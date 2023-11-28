@@ -25,7 +25,7 @@ To use *docker-cups*, follow these steps:
          -e CUPS_PASS=admin \
          -v /dev/bus/usb:/dev/bus/usb \
          -v /run/dbus:/run/dbus \
-         -v "${PWD}"/drivers:/opt/drivers \
+         -v ./drivers:/opt/drivers \
          docker.io/aguslr/cups:latest
 
 3. Open <http://127.0.0.1:631> with your web browser to access CUPS.
