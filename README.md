@@ -1,7 +1,7 @@
 [aguslr/docker-cups][1]
 =======================
 
-[![docker-pulls](https://img.shields.io/docker/pulls/aguslr/cups)](https://hub.docker.com/r/aguslr/cups) [![image-size](https://img.shields.io/docker/image-size/aguslr/cups/latest)](https://hub.docker.com/r/aguslr/cups)
+[![publish-docker-image](https://github.com/aguslr/docker-cups/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/aguslr/docker-cups/actions/workflows/docker-publish.yml) [![docker-pulls](https://img.shields.io/docker/pulls/aguslr/cups)](https://hub.docker.com/r/aguslr/cups) [![image-size](https://img.shields.io/docker/image-size/aguslr/cups/latest)](https://hub.docker.com/r/aguslr/cups)
 
 
 This *Docker* image sets up *CUPS* inside a docker container.
