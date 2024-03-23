@@ -20,7 +20,7 @@ RUN \
   -e 's,</Location>,  Allow all\n</Location>,' /etc/cups/cupsd.conf; \
   printf '\nServerAlias *\nDefaultEncryption IfRequested\n' >> /etc/cups/cupsd.conf
 
-COPY entrypoint.sh /entrypoint.sh
+COPY rootfs/ /
 
 ENV CUPS_USER=admin CUPS_PASS=admin
 
