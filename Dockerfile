@@ -2,23 +2,26 @@ ARG BASE_IMAGE=library/debian:stable-slim
 
 FROM docker.io/${BASE_IMAGE}
 
-RUN \
-  apt-get update && \
-  env DEBIAN_FRONTEND=noninteractive \
-  apt-get install -y --no-install-recommends cups ipp-usb \
-  -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
-  && apt-get install -y printer-driver-all \
-  -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" \
-  && apt-get clean && rm -rf /var/lib/apt/lists/* /var/lib/apt/lists/*
+RUN <<-EOT bash
+	set -eu
 
-RUN \
-  sed -i '/Log /s/\/var\/log\/cups\/.*$/stderr/' /etc/cups/cups-files.conf && \
-  sed -i \
-  -e 's/LogLevel .*/LogLevel debug/' \
-  -e 's/Listen localhost:631/Listen 0.0.0.0:631/' \
-  -e 's/Browsing Off/Browsing On/' \
-  -e 's,</Location>,  Allow all\n</Location>,' /etc/cups/cupsd.conf; \
-  printf '\nServerAlias *\nDefaultEncryption IfRequested\n' >> /etc/cups/cupsd.conf
+	apt-get update
+	env DEBIAN_FRONTEND=noninteractive \
+		apt-get install -y --no-install-recommends cups ipp-usb \
+		-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+	env DEBIAN_FRONTEND=noninteractive \
+	apt-get install -y printer-driver-all \
+		-o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+	apt-get clean && rm -rf /var/lib/apt/lists/* /var/lib/apt/lists/*
+
+	sed -i '/Log /s/\/var\/log\/cups\/.*$/stderr/' /etc/cups/cups-files.conf
+	sed -i \
+		-e 's/LogLevel .*/LogLevel debug/' \
+		-e 's/Listen localhost:631/Listen 0.0.0.0:631/' \
+		-e 's/Browsing Off/Browsing On/' \
+		-e 's,</Location>,  Allow all\n</Location>,' /etc/cups/cupsd.conf
+	printf '\nServerAlias *\nDefaultEncryption IfRequested\n' >> /etc/cups/cupsd.conf
+EOT
 
 COPY rootfs/ /
 
