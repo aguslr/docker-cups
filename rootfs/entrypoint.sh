@@ -13,6 +13,8 @@ fi
 
 # Create CUPS user
 if [ "${CUPS_USER:=admin}" ] && ! grep -q -s "^${CUPS_USER}" /etc/passwd; then
+	# Initialize flag
+	gen_pass=0
 	# Generate random password
 	[ -z "${CUPS_PASS}" ] && \
 		CUPS_PASS=$(date +%s | sha256sum | base64 | head -c 32) && gen_pass=1
