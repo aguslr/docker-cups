@@ -13,18 +13,15 @@ fi
 
 # Create CUPS user
 if [ "${CUPS_USER:=admin}" ] && ! grep -q -s "^${CUPS_USER}" /etc/passwd; then
-	# Initialize flag
-	gen_pass=0
-	# Generate random password
-	[ -z "${CUPS_PASS}" ] && \
-		CUPS_PASS=$(date +%s | sha256sum | base64 | head -c 32) && gen_pass=1
 	# Add user to system
 	useradd -g lpadmin "${CUPS_USER}"
-	# Set password
-	if printf '%s:%s\n' "${CUPS_USER}" "${CUPS_PASS}" \
-		| chpasswd && [ "${gen_pass}" -eq 1 ]; then
-		printf 'Password for %s is %s\n' "${CUPS_USER}" "${CUPS_PASS}"
+	# Generate random password
+	if [ -z "${CUPS_PASS}" ]; then
+		CUPS_PASS="$(date +%s | sha256sum | base64 | head -c 32)" && \
+			printf 'Password for %s is %s\n' "${CUPS_USER}" "${CUPS_PASS}"
 	fi
+	# Set password
+	printf '%s:%s\n' "${CUPS_USER}" "${CUPS_PASS}" | chpasswd
 fi
 
 # Launch UDEV
